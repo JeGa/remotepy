@@ -118,9 +118,12 @@ def copyFromRemote(file, destDir, ssh):
 @click.option("--run/--no-run", default=False, help="Run remote script.")
 @click.option("--usepw/--usekey", default=False, help="Ask for password or use key.")
 @click.option("--copyback/--no-copyback", default=False, help="Copies after run files from remote to local.")
-@click.option("--config", default="config")
+@click.option("--config", help="The config ini file.")
 @click.option("--verbose", is_flag=True, help="Verbose output.")
 def main(copy, run, usepw, copyback, config, verbose):
+    if not config:
+        raise ValueError("No config file specified. Use --config FILE to specify config file.")
+
     if verbose:
         logging.basicConfig(level=logging.INFO)
 
@@ -174,7 +177,3 @@ def main(copy, run, usepw, copyback, config, verbose):
         print(out)
         print("STDERR")
         print(err)
-
-
-if __name__ == "__main__":
-    main()
